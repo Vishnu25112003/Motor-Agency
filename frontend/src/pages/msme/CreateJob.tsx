@@ -130,7 +130,7 @@ export default function CreateJob() {
                             <SelectItem value="loading" disabled>Loading...</SelectItem>
                           ) : products?.length ? (
                             products.map((product) => {
-                              const productId = product.id || product._id;
+                              const productId = product.id || (product as any)._id;
                               return (
                                 <SelectItem key={productId} value={productId.toString()}>
                                   {product.name}

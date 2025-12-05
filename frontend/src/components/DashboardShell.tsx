@@ -100,7 +100,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
   if (!user) return null;
 
-  const navItems = getNavItems(user.type);
+  const navItems = getNavItems(user.type as UserType);
 
   const sidebarStyle = {
     "--sidebar-width": "16rem",
@@ -151,7 +151,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 <Button variant="ghost" className="w-full justify-start gap-2 px-2">
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                      {getInitials(user.name)}
+                      {getInitials(user.name || '')}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 text-left min-w-0">
@@ -177,7 +177,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <SidebarTrigger data-testid="button-sidebar-toggle" />
             </div>
             <div className="flex items-center gap-3">
-              <RoleBadge role={user.type} />
+              <RoleBadge role={user.type as UserType} />
               <ThemeToggle />
             </div>
           </header>

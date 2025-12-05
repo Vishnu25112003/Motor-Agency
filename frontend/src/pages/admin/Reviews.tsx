@@ -81,7 +81,7 @@ export default function AdminReviews() {
                   {pendingJobs.map((job) => {
                     const jobId = (job as any).id ?? (job as any)._id ?? "";
                     const hasTestResults = job.testResults && job.testResults.length > 0;
-                    const latestResult = hasTestResults ? job.testResults[job.testResults.length - 1] : null;
+                    const latestResult = hasTestResults && job.testResults ? job.testResults[job.testResults.length - 1] : null;
                     
                     return (
                       <TableRow key={jobId || Math.random().toString(36).slice(2)} data-testid={`review-row-${jobId}`}>

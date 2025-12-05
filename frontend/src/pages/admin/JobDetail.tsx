@@ -336,7 +336,7 @@ export default function AdminJobDetail() {
               </SelectTrigger>
               <SelectContent>
                 {agencies?.map((agency) => {
-                  const agencyId = agency.id || agency._id;
+                  const agencyId = agency.id || (agency as any)._id;
                   return (
                     <SelectItem key={agencyId} value={agencyId?.toString() || ''}>
                       {agency.name}

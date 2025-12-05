@@ -22,6 +22,7 @@ interface AnalyticsData {
 const STATUS_COLORS: Record<JobStatus, string> = {
   DRAFT: "hsl(var(--muted))",
   UNDER_TESTING: "hsl(45, 93%, 47%)",
+  ASSIGNED: "hsl(280, 65%, 60%)",
   UNDER_REVIEW: "hsl(217, 91%, 60%)",
   APPROVED: "hsl(142, 71%, 45%)",
   REJECTED: "hsl(0, 84%, 60%)",

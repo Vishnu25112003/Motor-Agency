@@ -197,7 +197,7 @@ export default function MSMEs() {
                               <SelectItem value="loading" disabled>Loading products...</SelectItem>
                             ) : products?.length ? (
                               products.map((product) => {
-                                const productId = product.id || product._id;
+                                const productId = product.id || (product as any)._id;
                                 const categoryValue = product.category || product.name;
                                 return (
                                   <SelectItem key={productId} value={categoryValue}>
