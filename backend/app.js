@@ -7,33 +7,15 @@ const { errorMiddleware } = require("./middleware/error.middleware");
 function createApp() {
   const app = express();
   
-  // CORS middleware
+  // CORS middleware - Allow all origins for production
   app.use(cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      
-      const allowedOrigins = [
-        'http://localhost:5173', 
-        'http://localhost:3000', 
-        'http://localhost:5174',
-        'https://motor-agency.onrender.com',
-        'https://motor-agency.vercel.app',
-        // Add your frontend deployment URL here when deployed
-        process.env.FRONTEND_URL
-      ].filter(Boolean);
-      
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(null, true); // Allow all origins in production (you can restrict this later)
-      }
-    },
+    origin: true, // Allow all origins
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Content-Length', 'X-Requested-With'],
     preflightContinue: false,
-    optionsSuccessStatus: 200
+    optionsSuccessStatus: 204
   }));
   
   // Body parsing
