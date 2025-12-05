@@ -13,7 +13,15 @@ function createApp() {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
       
-      const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'];
+      const allowedOrigins = [
+        'http://localhost:5173', 
+        'http://localhost:3000', 
+        'http://localhost:5174',
+        'https://motor-agency.onrender.com',
+        // Add your frontend deployment URL here when deployed
+        process.env.FRONTEND_URL
+      ].filter(Boolean);
+      
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {

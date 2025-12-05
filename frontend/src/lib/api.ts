@@ -1,7 +1,7 @@
 // src/lib/api.ts
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://motor-agency.onrender.com';
 
 class ApiClient {
   private client: AxiosInstance;
