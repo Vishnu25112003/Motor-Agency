@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
@@ -12,8 +13,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Plus, Building2, Loader2, Mail, Phone } from "lucide-react";
-import { msmeApi } from "@/lib/services";
-import { MSME } from "@shared/schema";
+import { msmeApi, productsApi } from "@/lib/services";
+import { MSME, Product } from "@shared/schema";
 import { format } from "date-fns";
 
 const msmeSchema = z.object({
@@ -31,7 +32,9 @@ type MSMEForm = z.infer<typeof msmeSchema>;
 export default function MSMEs() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [msmes, setMsmes] = useState<MSME[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [productsLoading, setProductsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
   const { toast } = useToast();
 
@@ -42,13 +45,29 @@ export default function MSMEs() {
         const data = await msmeApi.getMSMEs() as MSME[];
         setMsmes(data);
       } catch (error) {
-        console.error('Failed to fetch MSMEs:', error);
+        // Error fetching MSMEs
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchMSMEs();
+  }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setProductsLoading(true);
+        const data = await productsApi.getProducts() as Product[];
+        setProducts(data);
+      } catch (error) {
+        // Error fetching products
+      } finally {
+        setProductsLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   const form = useForm<MSMEForm>({
@@ -167,9 +186,31 @@ export default function MSMEs() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Product Category <span className="text-red-500">*</span></FormLabel>
-                        <FormControl>
-                          <Input placeholder="Product category" {...field} data-testid="input-msme-category" />
-                        </FormControl>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger data-testid="select-product-category">
+                              <SelectValue placeholder="Select a product category" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {productsLoading ? (
+                              <SelectItem value="loading" disabled>Loading products...</SelectItem>
+                            ) : products?.length ? (
+                              products.map((product) => {
+                                const productId = product.id || product._id;
+                                const categoryValue = product.category || product.name;
+                                return (
+                                  <SelectItem key={productId} value={categoryValue}>
+                                    {product.name}
+                                    {product.category && ` (${product.category})`}
+                                  </SelectItem>
+                                );
+                              })
+                            ) : (
+                              <SelectItem value="no-products" disabled>No products available</SelectItem>
+                            )}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}

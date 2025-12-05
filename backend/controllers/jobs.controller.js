@@ -29,26 +29,12 @@ async function getJob(req, res) {
   }
 
   if (req.user.type === "MSME" && job.msmeId?.id?.toString() !== req.user.id) {
-    console.log('MSME access check failed:');
-    console.log('Job msmeId:', job.msmeId);
-    console.log('Job msmeId.id:', job.msmeId?.id);
-    console.log('Job msmeId.id?.toString():', job.msmeId?.id?.toString());
-    console.log('Req.user.id:', req.user.id);
-    console.log('Req.user.id type:', typeof req.user.id);
-    console.log('Comparison result:', job.msmeId?.id?.toString() !== req.user.id);
     return res.status(403).json({ message: "Access denied" });
   }
   if (
     req.user.type === "AGENCY" &&
     job.assignedAgencyId?.id?.toString() !== req.user.id
   ) {
-    console.log('Agency access check failed:');
-    console.log('Job assignedAgencyId:', job.assignedAgencyId);
-    console.log('Job assignedAgencyId.id:', job.assignedAgencyId?.id);
-    console.log('Job assignedAgencyId.id?.toString():', job.assignedAgencyId?.id?.toString());
-    console.log('Req.user.id:', req.user.id);
-    console.log('Req.user.id type:', typeof req.user.id);
-    console.log('Comparison result:', job.assignedAgencyId?.id?.toString() !== req.user.id);
     return res.status(403).json({ message: "Access denied" });
   }
 

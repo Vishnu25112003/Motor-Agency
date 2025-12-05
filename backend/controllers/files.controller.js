@@ -2,9 +2,6 @@ const { uploadBuffer } = require("../cloudinary");
 const { storage } = require("../storage");
 
 async function uploadFile(req, res) {
-  console.log('Upload request - user:', req.user);
-  console.log('Upload request - file:', req.file ? 'exists' : 'missing');
-  
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }

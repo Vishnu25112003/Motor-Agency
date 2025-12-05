@@ -24,7 +24,7 @@ export default function AdminJobs() {
         const data = await jobsApi.getJobs() as JobWithRelations[];
         setJobs(data);
       } catch (error) {
-        console.error('Failed to fetch jobs:', error);
+        // Error fetching jobs
       } finally {
         setIsLoading(false);
       }

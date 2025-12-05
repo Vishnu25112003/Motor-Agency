@@ -45,7 +45,7 @@ export default function AgencyDashboard() {
       const data = await agenciesApi.getAgencyStats() as AgencyStats;
       setStats(data);
     } catch (error) {
-      console.error('Failed to fetch agency stats:', error);
+      // Error fetching stats
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);

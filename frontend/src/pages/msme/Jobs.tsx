@@ -26,7 +26,7 @@ export default function MSMEJobs() {
         const data = await msmeApi.getMSMEJobs() as JobWithRelations[];
         setJobs(data);
       } catch (error) {
-        console.error('Failed to fetch MSME jobs:', error);
+        // Error fetching jobs
       } finally {
         setIsLoading(false);
       }
@@ -38,13 +38,13 @@ export default function MSMEJobs() {
   return (
     <DashboardShell>
       <div className="space-y-6">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-semibold">My Jobs</h1>
-            <p className="text-muted-foreground mt-1">View and manage your testing jobs</p>
+            <h1 className="text-2xl sm:text-3xl font-semibold">My Jobs</h1>
+            <p className="text-muted-foreground mt-1 text-sm sm:text-base">View and manage your testing jobs</p>
           </div>
           <Link href="/msme/jobs/new">
-            <Button data-testid="button-create-job">
+            <Button data-testid="button-create-job" className="w-full sm:w-auto">
               <Plus className="h-4 w-4 mr-2" />
               Create Job
             </Button>

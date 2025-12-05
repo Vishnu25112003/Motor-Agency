@@ -32,29 +32,20 @@ class ApiClient {
             }
           }
         } catch (e) {
-          console.warn('[api] request interceptor error', e);
+          // Request interceptor error
         }
-        // lightweight debug
-        // eslint-disable-next-line no-console
-        console.debug('[api] Request:', config.method?.toUpperCase(), config.url);
         return config;
       },
       (error) => {
-        // eslint-disable-next-line no-console
-        console.error('[api] Request error', error);
         return Promise.reject(error);
       }
     );
 
     this.client.interceptors.response.use(
       (response: AxiosResponse) => {
-        // eslint-disable-next-line no-console
-        console.debug('[api] Response:', response.config.method?.toUpperCase(), response.config.url, response.status);
         return response;
       },
       (error) => {
-        // eslint-disable-next-line no-console
-        console.error('[api] Response error', error.config?.method?.toUpperCase(), error.config?.url, error.response?.status);
         if (error.response?.status === 401) {
           localStorage.removeItem('motortest_auth');
           window.location.href = '/login';
@@ -68,16 +59,11 @@ class ApiClient {
     try {
       if (token) {
         (this.client.defaults.headers as any).common['Authorization'] = `Bearer ${token}`;
-        // eslint-disable-next-line no-console
-        console.debug('[api] setAuthToken: header set');
       } else {
         delete (this.client.defaults.headers as any).common['Authorization'];
-        // eslint-disable-next-line no-console
-        console.debug('[api] setAuthToken: header removed');
       }
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn('[api] setAuthToken failed', e);
+      // setAuthToken failed
     }
   }
 

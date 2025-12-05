@@ -43,12 +43,10 @@ export default function Login() {
   async function onSubmit(data: LoginForm) {
     if (isSubmitting) return;
     setIsSubmitting(true);
-    console.log('Login attempt:', { email: data.email, userType });
     try {
       await login(data.email, data.password, userType);
       // do not navigate here — effect below handles redirect when auth state updates
     } catch (error: any) {
-      console.error('Login error:', error);
       toast({ title: "Login failed", description: error?.message ?? "Invalid credentials", variant: "destructive" });
     } finally {
       setIsSubmitting(false);

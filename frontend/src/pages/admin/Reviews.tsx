@@ -29,7 +29,7 @@ export default function AdminReviews() {
         const data = await jobsApi.getJobs() as JobWithRelations[];
         setJobs(data);
       } catch (error) {
-        console.error('Failed to fetch jobs:', error);
+        // Error fetching jobs
       } finally {
         setIsLoading(false);
       }
@@ -38,7 +38,6 @@ export default function AdminReviews() {
   }, []);
 
   const pendingJobs = jobs?.filter(j => j.currentStatus === "UNDER_REVIEW") || [];
-  console.log("Pending Jobs:", pendingJobs);
 
   return (
     <DashboardShell>

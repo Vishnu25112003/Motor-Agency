@@ -2,8 +2,6 @@ const { storage } = require("../storage");
 const { verifyPassword, generateToken } = require("../auth");
 
 async function login(req, res) {
-  console.log('Login request received:', { email: req.body.email, type: req.body.type });
-  
   // For now, we'll skip schema validation since it requires @shared/schema
   // In a real implementation, you would add validation here
   const { email, password, type } = req.body;
@@ -34,9 +32,6 @@ async function login(req, res) {
   if (!isValid) {
     return res.status(401).json({ message: "Invalid email or password" });
   }
-
-  console.log('User object from storage:', user);
-  console.log('User ID:', user.id);
   
   const token = generateToken({
     id: user.id,
@@ -45,8 +40,6 @@ async function login(req, res) {
     type,
     role: user.role,
   });
-
-  console.log('Generated token, sending response');
   
   return res.json({
     token,

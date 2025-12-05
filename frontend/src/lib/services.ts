@@ -31,7 +31,10 @@ export const jobsApi = {
 // Agencies APIs
 export const agenciesApi = {
   getAgencies: () => apiClient.get('/api/agencies'),
+  getAgency: (id: string) => apiClient.get(`/api/agencies/${id}`),
   createAgency: (data: any) => apiClient.post('/api/agencies', data),
+  updateAgency: (id: string, data: any) => apiClient.put(`/api/agencies/${id}`, data),
+  deleteAgency: (id: string) => apiClient.delete(`/api/agencies/${id}`),
   getAgencyStats: () => apiClient.get('/api/agency/stats'),
   getAgencyJobs: () => apiClient.get('/api/agency/jobs'),
   getAgencySubmissions: () => apiClient.get('/api/agency/submissions'),

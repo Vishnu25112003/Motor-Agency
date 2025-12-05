@@ -21,8 +21,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setAuthState(stored);
     apiClient.setAuthToken(stored.token ?? null);
     setIsLoading(false);
-    // eslint-disable-next-line no-console
-    console.debug('[AuthProvider] initialized with stored auth:', stored);
   }, []);
 
   const login = useCallback(async (email: string, password: string, type: "ADMIN" | "MSME" | "AGENCY") => {
@@ -30,8 +28,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setStoredAuth(data.user, data.token);
     apiClient.setAuthToken(data.token);
     setAuthState({ user: data.user, token: data.token, isAuthenticated: true });
-    // eslint-disable-next-line no-console
-    console.debug('[AuthProvider] login completed:', { user: data.user });
     return data;
   }, []);
 

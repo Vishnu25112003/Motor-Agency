@@ -110,8 +110,27 @@ class MongoStorage {
   async getAllTestingAgencies() {
     return TestingAgencyModel.find()
       .sort({ createdAt: -1 })
+      .populate("approvalCertificateFileId")
+      .lean()
+      .exec()
+      .then(agencies => agencies.map(agency => ({
+        ...agency,
+        approvalCertificateFile: agency.approvalCertificateFileId,
+      })));
+  }
+
+  async updateTestingAgency(id, data) {
+    return TestingAgencyModel.findByIdAndUpdate(
+      id,
+      { ...data, updatedAt: new Date() },
+      { new: true },
+    )
       .lean()
       .exec();
+  }
+
+  async deleteTestingAgency(id) {
+    await TestingAgencyModel.findByIdAndDelete(id).exec();
   }
 
   async createFile(data) {

@@ -68,7 +68,6 @@ export default function AdminJobDetail() {
   const loadAgencies = useCallback(async () => {
     try {
       const data = await agenciesApi.getAgencies() as TestingAgency[];
-      console.log("Loaded agencies:", data);
       setAgencies(data);
     } catch (err) {
       setAgencies(null);

@@ -29,8 +29,7 @@ export function getStoredAuth(): AuthState {
       };
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error('Failed to parse stored auth', e);
+    // Failed to parse stored auth
   }
   return { user: null, token: null, isAuthenticated: false };
 }

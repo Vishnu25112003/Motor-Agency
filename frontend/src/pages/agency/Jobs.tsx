@@ -36,7 +36,7 @@ export default function AgencyJobs() {
       const data = await agenciesApi.getAgencyJobs() as AgencyJobsResponse;
       setJobsData(data);
     } catch (error) {
-      console.error('Failed to fetch agency jobs:', error);
+      // Error fetching jobs
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);

@@ -40,7 +40,7 @@ export default function Products() {
       const data = await productsApi.getProducts() as Product[];
       setProducts(data);
     } catch (error) {
-      console.error('Failed to fetch products:', error);
+      // Error fetching products
     } finally {
       setIsLoading(false);
     }

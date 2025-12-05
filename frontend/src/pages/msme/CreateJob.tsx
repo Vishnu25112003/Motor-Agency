@@ -39,10 +39,9 @@ export default function CreateJob() {
       try {
         setProductsLoading(true);
         const data = await productsApi.getProducts() as Product[];
-        console.log('Products data:', data);
         setProducts(data);
       } catch (error) {
-        console.error('Failed to fetch products:', error);
+        // Error fetching products
       } finally {
         setProductsLoading(false);
       }

@@ -42,7 +42,7 @@ export default function MSMEDashboard() {
         const data = await msmeApi.getMSMEStats() as MSMEStats;
         setStats(data);
       } catch (error) {
-        console.error('Failed to fetch MSME stats:', error);
+        // Error fetching stats
       } finally {
         setIsLoading(false);
       }

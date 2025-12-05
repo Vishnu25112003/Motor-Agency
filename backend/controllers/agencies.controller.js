@@ -47,15 +47,69 @@ async function getAgencyJobs(req, res) {
 }
 
 async function getAgencySubmissions(req, res) {
-  console.log('Getting submissions for agency:', req.user.id);
   const submissions = await storage.getTestResultsByAgency(req.user.id);
-  console.log('Found submissions:', submissions.length);
   return res.json(submissions);
+}
+
+async function getAgency(req, res) {
+  const { id } = req.params;
+  const agency = await storage.getTestingAgency(id);
+  if (!agency) {
+    return res.status(404).json({ message: "Agency not found" });
+  }
+  return res.json(agency);
+}
+
+async function updateAgency(req, res) {
+  try {
+    const { id } = req.params;
+    const { password, ...rest } = req.body;
+    
+    const updateData = { ...rest };
+    
+    if (password) {
+      const passwordHash = await hashPassword(password);
+      updateData.passwordHash = passwordHash;
+    }
+
+    const agency = await storage.updateTestingAgency(id, updateData);
+    if (!agency) {
+      return res.status(404).json({ message: "Agency not found" });
+    }
+    
+    return res.json(agency);
+  } catch (error) {
+    if (error?.code === 11000) {
+      return res
+        .status(400)
+        .json({ message: "Email or Approval ID already exists" });
+    }
+    throw error;
+  }
+}
+
+async function deleteAgency(req, res) {
+  try {
+    const { id } = req.params;
+    
+    const agency = await storage.getTestingAgency(id);
+    if (!agency) {
+      return res.status(404).json({ message: "Agency not found" });
+    }
+    
+    await storage.deleteTestingAgency(id);
+    return res.json({ message: "Agency deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to delete agency" });
+  }
 }
 
 module.exports = {
   listAgencies,
   createAgency,
+  getAgency,
+  updateAgency,
+  deleteAgency,
   getAgencyStats,
   getAgencyJobs,
   getAgencySubmissions

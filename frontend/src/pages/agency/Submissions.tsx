@@ -32,7 +32,6 @@ export default function AgencySubmissions() {
       const data = await agenciesApi.getAgencySubmissions() as SubmissionWithJob[];
       setSubmissions(data);
     } catch (error: any) {
-      console.error('Failed to fetch submissions:', error);
       toast({ 
         title: "Failed to fetch submissions", 
         description: error.message || "Please try again later",

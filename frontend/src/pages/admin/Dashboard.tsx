@@ -44,7 +44,7 @@ export default function AdminDashboard() {
         const data = await analyticsApi.getAdminStats() as DashboardStats;
         setStats(data);
       } catch (error) {
-        console.error('Failed to fetch admin stats:', error);
+        // Error fetching stats
       } finally {
         setIsLoading(false);
       }
@@ -129,10 +129,10 @@ export default function AdminDashboard() {
           </Card>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between gap-4">
-              <CardTitle>Status Breakdown</CardTitle>
+            <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
+              <CardTitle className="text-lg">Status Breakdown</CardTitle>
             </CardHeader>
             <CardContent>
               {isLoading ? (
@@ -144,9 +144,9 @@ export default function AdminDashboard() {
               ) : (
                 <div className="space-y-3">
                   {(["UNDER_TESTING", "UNDER_REVIEW", "APPROVED", "REJECTED"] as JobStatus[]).map((status) => (
-                    <div key={status} className="flex items-center justify-between">
+                    <div key={status} className="flex items-center justify-between gap-2 flex-wrap">
                       <StatusBadge status={status} />
-                      <span className="font-medium" data-testid={`stat-status-${status.toLowerCase()}`}>
+                      <span className="font-medium text-lg" data-testid={`stat-status-${status.toLowerCase()}`}>
                         {stats?.statusBreakdown?.[status] ?? 0}
                       </span>
                     </div>
@@ -157,8 +157,8 @@ export default function AdminDashboard() {
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between gap-4">
-              <CardTitle>Recent Jobs</CardTitle>
+            <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
+              <CardTitle className="text-lg">Recent Jobs</CardTitle>
               <Link href="/admin/jobs">
                 <Button variant="ghost" size="sm" data-testid="link-view-all-jobs">
                   View All
@@ -179,7 +179,7 @@ export default function AdminDashboard() {
                     return (
                       <Link key={jobId} href={`/admin/jobs/${jobId}`}>
                         <div
-                          className="flex items-center justify-between p-3 rounded-lg border hover-elevate cursor-pointer"
+                          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 rounded-lg border hover-elevate cursor-pointer"
                           data-testid={`job-row-${jobId}`}
                         >
                           <div className="min-w-0 flex-1">
@@ -188,7 +188,9 @@ export default function AdminDashboard() {
                               {job.product?.name} • {job.msme?.name}
                             </p>
                           </div>
-                          <StatusBadge status={job.currentStatus} />
+                          <div className="flex-shrink-0">
+                            <StatusBadge status={job.currentStatus} />
+                          </div>
                         </div>
                       </Link>
                     );
@@ -203,16 +205,16 @@ export default function AdminDashboard() {
           </Card>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Link href="/admin/products">
             <Card className="hover-elevate cursor-pointer">
-              <CardContent className="flex items-center gap-4 p-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                  <Package className="h-6 w-6 text-primary" />
+              <CardContent className="flex items-center gap-4 p-4 sm:p-6">
+                <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
+                  <Package className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                 </div>
-                <div>
-                  <p className="font-medium">Products</p>
-                  <p className="text-sm text-muted-foreground">
+                <div className="min-w-0">
+                  <p className="font-medium truncate">Products</p>
+                  <p className="text-sm text-muted-foreground truncate">
                     {stats?.totalProducts ?? 0} registered
                   </p>
                 </div>
@@ -222,13 +224,13 @@ export default function AdminDashboard() {
 
           <Link href="/admin/msmes">
             <Card className="hover-elevate cursor-pointer">
-              <CardContent className="flex items-center gap-4 p-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10">
-                  <Building2 className="h-6 w-6 text-blue-500" />
+              <CardContent className="flex items-center gap-4 p-4 sm:p-6">
+                <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-blue-500/10 flex-shrink-0">
+                  <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" />
                 </div>
-                <div>
-                  <p className="font-medium">MSMEs</p>
-                  <p className="text-sm text-muted-foreground">
+                <div className="min-w-0">
+                  <p className="font-medium truncate">MSMEs</p>
+                  <p className="text-sm text-muted-foreground truncate">
                     Manage enterprises
                   </p>
                 </div>
@@ -238,13 +240,13 @@ export default function AdminDashboard() {
 
           <Link href="/admin/agencies">
             <Card className="hover-elevate cursor-pointer">
-              <CardContent className="flex items-center gap-4 p-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-teal-500/10">
-                  <FlaskConical className="h-6 w-6 text-teal-500" />
+              <CardContent className="flex items-center gap-4 p-4 sm:p-6">
+                <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-teal-500/10 flex-shrink-0">
+                  <FlaskConical className="h-5 w-5 sm:h-6 sm:w-6 text-teal-500" />
                 </div>
-                <div>
-                  <p className="font-medium">Agencies</p>
-                  <p className="text-sm text-muted-foreground">
+                <div className="min-w-0">
+                  <p className="font-medium truncate">Agencies</p>
+                  <p className="text-sm text-muted-foreground truncate">
                     Manage testing agencies
                   </p>
                 </div>

@@ -38,7 +38,7 @@ export default function AdminAnalytics() {
         const data = await analyticsApi.getAdminAnalytics() as AnalyticsData;
         setAnalytics(data);
       } catch (error) {
-        console.error('Failed to fetch analytics:', error);
+        // Error fetching analytics
       } finally {
         setIsLoading(false);
       }

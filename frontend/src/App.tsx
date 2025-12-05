@@ -26,10 +26,6 @@ import AgencySubmissions from "@/pages/agency/Submissions";
 function ProtectedRoute({ component: Component, allowedTypes }: { component: React.ComponentType; allowedTypes: string[] }) {
   const { isAuthenticated, user, isLoading } = useAuth();
 
-  // debug to inspect what router sees
-  // eslint-disable-next-line no-console
-  console.debug('[ProtectedRoute] render:', { isLoading, isAuthenticated, user });
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
