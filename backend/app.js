@@ -18,6 +18,7 @@ function createApp() {
         'http://localhost:3000', 
         'http://localhost:5174',
         'https://motor-agency.onrender.com',
+        'https://motor-agency.vercel.app',
         // Add your frontend deployment URL here when deployed
         process.env.FRONTEND_URL
       ].filter(Boolean);
@@ -25,7 +26,7 @@ function createApp() {
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(null, true); // Allow all origins in production (you can restrict this later)
       }
     },
     credentials: true,
